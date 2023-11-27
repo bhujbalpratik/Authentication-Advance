@@ -130,6 +130,9 @@
                 <input type="text" placeholder="Name" name="name" />
                 <input type="text" placeholder="Email address" name="email" />
                 <input type="password" placeholder="Password" name="password" />
+                <p style="color: red;">
+                    <%=locals.msg%>
+                </p>
                 <input type="submit" value="Create" id="btn">
                 <p class="message">Already registered? <a href="/user/login">Log In</a></p>
             </form>
