@@ -1,4 +1,5 @@
 import { User } from "../models/user.model.js";
+import bcrypt from "bcrypt";
 
 export const userhome = (req, res) => {
   res.send("User Home");
@@ -19,10 +20,14 @@ export const PostRegister = async (req, res) => {
       msg: "Please fill your data",
     });
   }
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  console.log(hashedPassword);
+
   await User.create({
     name,
     email,
-    password,
+    password: hashedPassword,
   });
 
   res.render("login", {
@@ -46,7 +51,7 @@ export const PostLogin = async (req, res) => {
     });
   }
 
-  const isPasswordMatch = password === user.password;
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
 
   if (!isPasswordMatch) {
     return res.render("login", {
